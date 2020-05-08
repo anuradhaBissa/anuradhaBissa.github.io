@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+</head>
+    <title>HTML 5  - by Anuradha Bissa</title>
+</head>
+
+<body onload="init();">
+    <canvas id="demoCanvas" width="1000" height="500"></canvas>
+  </body>
+
+  <script>
+        const PADDLE_WIDTH = 100;
+        const PADDLE_HEIGHT = 20;
+        const BRICKS_WIDTH = 60;
+        const BRICKS_HEIGHT = 30;
+
+        var stage;
+        var paddle;
+        var ball;
+
+        //CreateJS
+        function init() 
+        {
+            stage = new createjs.Stage("demoCanvas");
+            createjs.Ticker.setFPS(60);
+            createjs.Ticker.addEventListener("tick", stage);
+
+            //createBricks();
+            createBrickGrid();
+            createBall();
+            createPaddle();
+        }
+        //Brick gride function
+
+        function createBrickGrid(){
+            for(var i = 0;i<14;i++)
+                for(var j = 0;j<5;j++)
+                {
+                    createBricks(i*(BRICKS_WIDTH+10)+40,j*(BRICKS_HEIGHT+5)+20);
+                }
+        }
+        //Bricks
+        function createBricks(x,y)
+        {
+            var brick = new createjs.Shape();
+            brick.graphics.beginFill('#cb4154');
+            brick.graphics.drawRect(0,0, BRICKS_WIDTH, BRICKS_HEIGHT);
+            brick.graphics.endFill();
+            stage.addChild(brick);
+
+
+            brick.regX = BRICKS_WIDTH/2;
+            brickregY = BRICKS_HEIGHT/2;
+
+            brick.x = x;
+            brick.y = y;
+        }
+
+        //Ball
+        function createBall() 
+        {
+            ball = new createjs.Shape();
+            ball.graphics.beginFill("DeepSkyBlue").drawCircle(0, 0, 10);
+            ball.x = stage.canvas.width/2;
+            ball.y = stage.canvas.height/2;
+            stage.addChild(ball);
+        }
+
+        //destroyBrick
+        function destroyBrick(brick){
+            createjs.Tween.get(brick,{}).to({scaleX:0, scaleY:0}, 500)
+        }
+
+        //Paddle
+        function createPaddle()
+        {
+            paddle = new createjs.Shape();
+            paddle.graphics.beginFill('#000000').drawRect(0, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+            paddle.y =200;
+            paddle.x = stage.canvas.width/2 - PADDLE_WIDTH/2;
+            paddle.y = stage.canvas.height*0.9;
+            stage.addChild(paddle);
+        }
+
+  </script>
+</html>
